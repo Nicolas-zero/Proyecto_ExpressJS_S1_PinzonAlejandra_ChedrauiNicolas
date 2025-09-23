@@ -1,0 +1,76 @@
+/* body (igual que antes) */
+body{
+    background-image: url(../img/fondoLogin-pica.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    color: #fff;
+  }
+  
+/* Contenedor principal: columna centrada */
+.contenedor-login {
+    width: 400px;              /* 🔹 ancho fijo de la columna */
+    margin: 80px auto;         /* 🔹 centrado horizontal + separación desde arriba */
+    padding: 30px;
+    background-color: #1F2833;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    text-align: center;
+  }
+  
+  /* Logo */
+  .icono {
+    width: 150px;
+    margin: 0 auto 20px auto;  /* centrado + espacio inferior */
+    display: block;
+  }
+  
+  /* Título */
+  .div-login h1 {
+    color: white;
+    margin-bottom: 20px;
+    
+  }
+  
+  /* Etiquetas de texto */
+  .correo,
+  .contraseña {
+    color: white;
+    text-align: left;
+    margin: 15px 0 5px 5px;
+    font-size: 14px;
+  }
+  
+  /* Inputs */
+  .image-input,
+  .image-input-2 {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    background-color: #1B1D2A;
+    border: 1px solid #686868;
+    border-radius: 5px;
+    color: white;
+    box-sizing: border-box;
+  }
+  
+  /* Botón */
+  .iniciar-sesion {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    background-color: #45A29E;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .iniciar-sesion:disabled {
+    opacity: 0.5;
+    
+  }
