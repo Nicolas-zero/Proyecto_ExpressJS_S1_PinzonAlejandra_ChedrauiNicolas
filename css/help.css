@@ -21,7 +21,7 @@
     left: 0;
     display: flex;
     flex-direction: column;
-    padding-top: 150px; /* <- espacio para el logo */
+    padding-top: 150px;
   }
   
   .logo {
@@ -83,22 +83,46 @@
   
   /* Main content */
   .main-content {
-    margin-left: 220px;
-    padding: 20px;
+    margin-left: 250px; /* coincide con ancho sidebar */
+    padding: 20px 40px;
     flex: 1;
   }
   
   /* Topbar */
   .topbar {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
-    padding-left: 300px;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
   }
     
   .user-actions img {
     width: 22px;
     margin-left: 15px;
     cursor: pointer;
+  }
+
+  /* contenido del help */
+
+
+  .help-container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  .help-section {
+    margin-bottom: 50px;
+  }
+  
+  .help-section h2 {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #fff;
+  }
+  
+  .help-section p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #ccc;
   }
