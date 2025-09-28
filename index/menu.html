@@ -10,26 +10,26 @@
     <body>
         <!-- Menú lateral -->
         <aside class="sidebar">
-          <div class="logo">
-              <img src="../img/logoKarenFlix.png" alt="KarenFlix Logo">
-            </div>
-        <nav>
-          <ul>
-            <li><a href="search.html"><img src="../img/buscarblanco.png" alt=""> Search</a></li>
-            <li><a href="#"><img src="../img/flechasblanco.png" alt=""> Play Something</a></li>
-            <li><a href="menu.html"><img src="../img/casablanca.png" alt=""> Home</a></li>
-            <li><a href="#"><img src="../img/trendingblanco.png" alt=""> New & Popular</a></li>
-            <li><a href="Tv_Shows.html"><img src="../img/tvblanco.png" alt=""> Tv Shows</a></li>
-            <li><a href="#"><img src="../img/peliculablanco.png" alt=""> Movies</a></li>
-            <li><a href="categories.html"><img src="../img/catalogoblanco.png" alt=""> Categories</a></li>
-            <li><a href="#"><img src="../img/masblanco.png" alt=""> My List</a></li>
-          </ul>
-        </nav>
-        <div class="sidebar-footer">
-          <a href="help.html">Get Help</a>
-          <a href="salir.html">Exit KarenFlix</a>
-        </div>
-      </aside>
+            <div class="logo">
+                <img src="../img/logoKarenFlix.png" alt="KarenFlix Logo">
+              </div>
+          <nav>
+            <ul>
+              <li><a href="search.html"><img src="../img/buscarblanco.png" alt=""> Search</a></li>
+              <li><a href="#"><img src="../img/flechasblanco.png" alt=""> Play Something</a></li>
+              <li><a href="menu.html"><img src="../img/casablanca.png" alt=""> Home</a></li>
+              <li><a href="#"><img src="../img/trendingblanco.png" alt=""> New & Popular</a></li>
+              <li><a href="Tv_Shows.html"><img src="../img/tvblanco.png" alt=""> Tv Shows</a></li>
+              <li><a href="#"><img src="../img/peliculablanco.png" alt=""> Movies</a></li>
+              <li><a href="categories.html"><img src="../img/catalogoblanco.png" alt=""> Categories</a></li>
+              <li><a href="#"><img src="../img/masblanco.png" alt=""> My List</a></li>
+            </ul>
+          </nav>
+          <div class="sidebar-footer">
+            <a href="help.html">Get Help</a>
+            <a href="salir.html">Exit KarenFlix</a>
+          </div>
+        </aside>
       
         <!-- Contenido principal -->
         <main class="main-content">
@@ -57,52 +57,9 @@
           </section>
       
           <!-- Carrusel de películas -->
-          <section class="movies-row">
-            <div class="movie-card">
-              <img src="https://i.imgur.com/2q3C2Lc.jpg" alt="The Incredibles">
-              <div class="movie-info">
-                <h3>The Incredibles</h3>
-                <p>Texto de relleno</p>
-                <span class="stars">★★★★☆</span>
-              </div>
-            </div>
-      
-            <div class="movie-card">
-              <img src="https://i.imgur.com/2hM8J7L.jpg" alt="Black Clover">
-              <div class="movie-info">
-                <h3>Black Clover</h3>
-                <p>Texto de relleno</p>
-                <span class="stars">★★★★★</span>
-              </div>
-            </div>
-      
-            <div class="movie-card">
-              <img src="https://i.imgur.com/0zENQOj.jpg" alt="Breaking Bad">
-              <div class="movie-info">
-                <h3>Breaking Bad</h3>
-                <p>Texto de relleno</p>
-                <span class="stars">★★★★★</span>
-              </div>
-            </div>
-      
-            <div class="movie-card">
-              <img src="https://i.imgur.com/9Noa2kS.jpg" alt="Doom Patrol">
-              <div class="movie-info">
-                <h3>Doom Patrol</h3>
-                <p>Texto de relleno</p>
-                <span class="stars">★★★★☆</span>
-              </div>
-            </div>
-      
-            <div class="movie-card">
-              <img src="https://i.imgur.com/xm3FhIQ.jpg" alt="Harley Quinn">
-              <div class="movie-info">
-                <h3>Harley Quinn</h3>
-                <p>Texto de relleno</p>
-                <span class="stars">★★★☆☆</span>
-              </div>
-            </div>
-          </section>
+          <section class="movies-row" id="movies-container">
+        <!-- Aquí se insertarán las películas desde Mongo -->
+      </section>
         </main>
-      </body>
+          <script src="../js/movies.js"></script>\n</body>
 </html>

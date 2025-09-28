@@ -1,24 +1,35 @@
+// config/db.js
 const { MongoClient } = require("mongodb");
-require("dotenv").config();
-
-const uri = process.env.MONGO_URI;
-const dbName = process.env.MONGO_DB;
 
 let db;
 
-const connectDB = async () => {
-  if (db) return db; // Evitar múltiples conexiones
+/**
+ * Conecta a MongoDB y guarda la instancia global
+ * @param {string} uri - cadena de conexión de MongoDB
+ */
+async function connectDB(uri) {
+  if (db) return db; // Si ya está conectada, devuelve la misma instancia
 
-  try {
-    const client = new MongoClient(uri);
-    await client.connect();
-    db = client.db(dbName);
-    console.log(`✅ Conectado a MongoDB: ${dbName}`);
-    return db;
-  } catch (err) {
-    console.error("❌ Error al conectar con MongoDB:", err.message);
-    process.exit(1); // Detener servidor si falla
+  const client = await MongoClient.connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+
+  // 👇 Nombre de tu base de datos (ajústalo si es otro)
+  db = client.db("karenflix");
+
+  console.log("✅ Conectado a MongoDB (config/db.js)");
+  return db;
+}
+
+/**
+ * Devuelve la instancia actual de la BD
+ */
+function getDB() {
+  if (!db) {
+    throw new Error("❌ No hay conexión a la BD. Llama a connectDB primero.");
   }
-};
+  return db;
+}
 
-module.exports = connectDB;
+module.exports = { connectDB, getDB };

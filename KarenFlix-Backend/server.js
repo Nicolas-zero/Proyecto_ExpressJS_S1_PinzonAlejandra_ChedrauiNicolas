@@ -1,6 +1,8 @@
+// server.js
 const express = require("express");
 const dotenv = require("dotenv");
-const { MongoClient } = require("mongodb");
+const cors = require("cors");
+const { connectDB } = require("./config/db");
 
 // Cargar variables de entorno
 dotenv.config();
@@ -10,6 +12,7 @@ const PORT = process.env.PORT || 3000;
 const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/karenflix";
 
 // Middleware
+app.use(cors());
 app.use(express.json());
 
 // Importar rutas
@@ -18,18 +21,16 @@ const userRoutes = require("./routes/userRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
 const reviewRoutes = require("./routes/reviews");
 
-// Conexión a la base de datos
-MongoClient.connect(MONGO_URI)
-  .then((client) => {
-    const db = client.db();
+// Conectar a la base de datos y levantar servidor
+connectDB(MONGO_URI)
+  .then(() => {
+    console.log("✅ Base de datos conectada");
 
-    console.log("✅ Conectado a MongoDB");
-
-    // Usar rutas con la BD
-    app.use("/api/movies", movieRoutes(db));
-    app.use("/api/users", userRoutes(db));
-    app.use("/api/categories", categoryRoutes(db));
-    app.use("/api/reviews", reviewRoutes(db));
+    // Usar rutas
+    app.use("/api/movies", movieRoutes);
+    app.use("/api/users", userRoutes);
+    app.use("/api/categories", categoryRoutes);
+    app.use("/api/reviews", reviewRoutes);
 
     // Ruta de prueba
     app.get("/", (req, res) => {
