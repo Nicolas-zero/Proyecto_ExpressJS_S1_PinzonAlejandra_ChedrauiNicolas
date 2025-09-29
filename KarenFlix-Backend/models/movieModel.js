@@ -1,3 +1,4 @@
+
 const { getDB } = require("../config/db");
 const { ObjectId } = require("mongodb");
 
@@ -30,12 +31,13 @@ async function deleteMovie(id) {
   return await db.collection(collection).deleteOne({ _id: new ObjectId(id) });
 }
 
-// 🚀 NUEVO: obtener 5 películas aleatorias de una categoría
+// 👇 Nuevo: obtener N películas aleatorias de una categoría
 async function getRandomMoviesByCategory(categoryId, limit = 5) {
   const db = getDB();
-  return await db.collection(collection)
+  return await db
+    .collection(collection)
     .aggregate([
-      { $match: { categoryId: new ObjectId(categoryId) } },
+      { $match: { categoryId: categoryId.toString() } },
       { $sample: { size: limit } }
     ])
     .toArray();
@@ -47,5 +49,5 @@ module.exports = {
   createMovie,
   updateMovie,
   deleteMovie,
-  getRandomMoviesByCategory, // exportamos la nueva función
+  getRandomMoviesByCategory
 };

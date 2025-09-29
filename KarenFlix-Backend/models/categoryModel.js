@@ -1,44 +1,35 @@
+
+const { getDB } = require("../config/db");
 const { ObjectId } = require("mongodb");
-const { getDb } = require("../config/db"); // función que devuelve la conexión
 
-const Category = {
-  // Obtener todas las categorías
-  async findAll() {
-    const db = getDb();
-    return await db.collection("categories").find().toArray();
-  },
+const collection = "categories";
 
-  // Buscar categoría por ID
-  async findById(id) {
-    const db = getDb();
-    return await db.collection("categories").findOne({ _id: new ObjectId(id) });
-  },
+async function findAll() {
+  const db = getDB();
+  return await db.collection(collection).find().toArray();
+}
 
-  // Crear categoría
-  async create(data) {
-    const db = getDb();
-    const result = await db.collection("categories").insertOne(data);
-    return result;
-  },
+async function findById(id) {
+  const db = getDB();
+  return await db.collection(collection).findOne({ _id: new ObjectId(id) });
+}
 
-  // Actualizar categoría
-  async update(id, data) {
-    const db = getDb();
-    const result = await db.collection("categories").updateOne(
-      { _id: new ObjectId(id) },
-      { $set: data }
-    );
-    return result;
-  },
+async function create(category) {
+  const db = getDB();
+  return await db.collection(collection).insertOne(category);
+}
 
-  // Eliminar categoría
-  async delete(id) {
-    const db = getDb();
-    const result = await db.collection("categories").deleteOne({
-      _id: new ObjectId(id),
-    });
-    return result;
-  },
-};
+async function update(id, data) {
+  const db = getDB();
+  return await db.collection(collection).updateOne(
+    { _id: new ObjectId(id) },
+    { $set: data }
+  );
+}
 
-module.exports = Category;
+async function remove(id) {
+  const db = getDB();
+  return await db.collection(collection).deleteOne({ _id: new ObjectId(id) });
+}
+
+module.exports = { findAll, findById, create, update, remove };

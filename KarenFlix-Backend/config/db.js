@@ -1,4 +1,4 @@
-// config/db.js
+
 const { MongoClient } = require("mongodb");
 
 let db;
@@ -10,15 +10,10 @@ let db;
 async function connectDB(uri) {
   if (db) return db; // Si ya está conectada, devuelve la misma instancia
 
-  const client = await MongoClient.connect(uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  const client = await MongoClient.connect(uri);
+  db = client.db("Karenflix"); // 👈 Ajusta el nombre si tu BD es diferente
 
-  // 👇 Nombre de tu base de datos (ajústalo si es otro)
-  db = client.db("Karenflix");
-
-  console.log("✅ Conectado a MongoDB (config/db.js)");
+  console.log("✅ Conectado a MongoDB");
   return db;
 }
 
