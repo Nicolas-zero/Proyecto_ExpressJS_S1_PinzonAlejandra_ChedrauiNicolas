@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const { validationResult } = require("express-validator");
-const { createUser, findUserByEmail } = require("../models/user.model");
+const { createUser, findUserByEmail } = require("../models/userModel");
 
 // Registro de usuario
 async function registerUser(req, res) {
