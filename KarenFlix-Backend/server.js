@@ -19,7 +19,7 @@ app.use(express.json());
 const movieRoutes = require("./routes/movieRoutes");
 const userRoutes = require("./routes/userRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
-const reviewRoutes = require("./routes/reviews");
+const reviewRoutes = require("../KarenFlix-Backend/views/reviews");
 
 // Conectar a la base de datos y levantar servidor
 connectDB(MONGO_URI)
