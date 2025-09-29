@@ -16,7 +16,7 @@ async function connectDB(uri) {
   });
 
   // 👇 Nombre de tu base de datos (ajústalo si es otro)
-  db = client.db("karenflix");
+  db = client.db("Karenflix");
 
   console.log("✅ Conectado a MongoDB (config/db.js)");
   return db;
