@@ -1,77 +1,38 @@
-const { ObjectId } = require("mongodb");
+const Category = require("../models/categoryModel");
 const { getDb } = require("../config/db");
+const { ObjectId } = require("mongodb");
 
-// Obtener todas las categorías
-exports.getAllCategories = async (req, res) => {
+// ... aquí tus otros exports
+
+// 🚀 Obtener películas agrupadas por categoría (4 filas de 5 películas aleatorias)
+exports.getMoviesByCategory = async (req, res) => {
   try {
     const db = getDb();
-    const categories = await db.collection("categories").find().toArray();
-    res.json(categories);
-  } catch (error) {
-    res.status(500).json({ error: "Error al obtener categorías" });
-  }
-};
 
-// Obtener categoría por ID
-exports.getCategoryById = async (req, res) => {
-  try {
-    const db = getDb();
-    const category = await db.collection("categories").findOne({ _id: new ObjectId(req.params.id) });
-    if (!category) return res.status(404).json({ error: "Categoría no encontrada" });
-    res.json(category);
-  } catch (error) {
-    res.status(500).json({ error: "Error al obtener categoría" });
-  }
-};
+    // Traer todas las categorías
+    const categories = await Category.findAll();
 
-// Crear categoría
-exports.createCategory = async (req, res) => {
-  try {
-    const db = getDb();
-    const { name, description } = req.body;
+    // Para cada categoría, traemos 5 películas aleatorias
+    const result = await Promise.all(
+      categories.map(async (cat) => {
+        const movies = await db
+          .collection("movies")
+          .aggregate([
+            { $match: { categoryId: cat._id.toString() } }, // Filtrar por categoría
+            { $sample: { size: 5 } }, // Tomar 5 aleatorias
+          ])
+          .toArray();
 
-    const newCategory = { name, description };
-
-    const result = await db.collection("categories").insertOne(newCategory);
-    res.status(201).json({ message: "Categoría creada", id: result.insertedId });
-  } catch (error) {
-    res.status(500).json({ error: "Error al crear categoría" });
-  }
-};
-
-// Actualizar categoría
-exports.updateCategory = async (req, res) => {
-  try {
-    const db = getDb();
-    const { name, description } = req.body;
-
-    const result = await db.collection("categories").updateOne(
-      { _id: new ObjectId(req.params.id) },
-      { $set: { name, description } }
+        return {
+          category: cat.name,
+          movies,
+        };
+      })
     );
 
-    if (result.matchedCount === 0) {
-      return res.status(404).json({ error: "Categoría no encontrada" });
-    }
-
-    res.json({ message: "Categoría actualizada" });
+    res.json(result);
   } catch (error) {
-    res.status(500).json({ error: "Error al actualizar categoría" });
-  }
-};
-
-// Eliminar categoría
-exports.deleteCategory = async (req, res) => {
-  try {
-    const db = getDb();
-    const result = await db.collection("categories").deleteOne({ _id: new ObjectId(req.params.id) });
-
-    if (result.deletedCount === 0) {
-      return res.status(404).json({ error: "Categoría no encontrada" });
-    }
-
-    res.json({ message: "Categoría eliminada" });
-  } catch (error) {
-    res.status(500).json({ error: "Error al eliminar categoría" });
+    console.error("❌ Error en getMoviesByCategory:", error);
+    res.status(500).json({ message: "Error al obtener películas por categoría", error });
   }
 };

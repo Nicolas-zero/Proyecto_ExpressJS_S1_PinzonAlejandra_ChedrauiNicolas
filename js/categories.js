@@ -1,39 +1,46 @@
+// public/js/categories.js
 document.addEventListener("DOMContentLoaded", async () => {
   const container = document.getElementById("categories-container");
 
   try {
-    const res = await fetch("http://localhost:3000/api/categories/movies-by-category");
+    //  Traer datos del backend
+    const res = await fetch("http://localhost:3000/api/categories/movies-by-category/all");
     const data = await res.json();
 
+    // Recorrer categorías
     data.forEach(cat => {
-      // Crear título de la categoría
+      // Crear sección por categoría
       const section = document.createElement("section");
       section.classList.add("category-row");
 
+      // Título de la categoría
       const title = document.createElement("h2");
       title.textContent = cat.category;
       section.appendChild(title);
 
       // Contenedor de películas
-      const row = document.createElement("div");
-      row.classList.add("movies-row");
+      const moviesRow = document.createElement("div");
+      moviesRow.classList.add("movies-row");
 
+      // Crear cards de películas
       cat.movies.forEach(movie => {
         const card = document.createElement("div");
         card.classList.add("movie-card");
+
         card.innerHTML = `
           <img src="${movie.poster}" alt="${movie.title}">
           <h3>${movie.title}</h3>
-          <p>${movie.description}</p>
-          <span>⭐ ${movie.rating}</span>
+          <p>${movie.year}</p>
         `;
-        row.appendChild(card);
+
+        moviesRow.appendChild(card);
       });
 
-      section.appendChild(row);
+      section.appendChild(moviesRow);
       container.appendChild(section);
     });
-  } catch (err) {
-    console.error("Error cargando películas:", err);
+  } catch (error) {
+    console.error("❌ Error cargando categorías:", error);
+    container.innerHTML = `<p style="color:red;">No se pudieron cargar las categorías.</p>`;
   }
 });

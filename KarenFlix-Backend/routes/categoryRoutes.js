@@ -1,34 +1,77 @@
-
 const express = require("express");
 const router = express.Router();
-const categoryController = require("../controllers/categoryController");
-
-// Importar modelos para la nueva ruta
-const Movie = require("../models/movieModel");
 const Category = require("../models/categoryModel");
+const Movie = require("../models/movieModel");
 
-// Rutas CRUD
-router.get("/", categoryController.getAllCategories);       // Obtener todas
-router.get("/:id", categoryController.getCategoryById);     // Obtener por ID
-router.post("/", categoryController.createCategory);        // Crear
-router.put("/:id", categoryController.updateCategory);      // Actualizar
-router.delete("/:id", categoryController.deleteCategory);   // Eliminar
-
-//  Nueva ruta: obtener 5 películas aleatorias por categoría
-router.get("/movies-by-category", async (req, res) => {
+//  Obtener todas las categorías
+router.get("/", async (req, res) => {
   try {
-    const categories = await Category.find();
+    const categories = await Category.findAll();
+    res.json(categories);
+  } catch (error) {
+    console.error("Error al obtener categorías:", error);
+    res.status(500).json({ error: "Error al obtener categorías" });
+  }
+});
+
+//  Obtener una categoría por ID
+router.get("/:id", async (req, res) => {
+  try {
+    const category = await Category.findById(req.params.id);
+    if (!category) {
+      return res.status(404).json({ error: "Categoría no encontrada" });
+    }
+    res.json(category);
+  } catch (error) {
+    console.error("Error al obtener categoría:", error);
+    res.status(500).json({ error: "Error al obtener categoría" });
+  }
+});
+
+//  Crear categoría
+router.post("/", async (req, res) => {
+  try {
+    const result = await Category.create(req.body);
+    res.status(201).json(result);
+  } catch (error) {
+    console.error("Error al crear categoría:", error);
+    res.status(500).json({ error: "Error al crear categoría" });
+  }
+});
+
+//  Actualizar categoría
+router.put("/:id", async (req, res) => {
+  try {
+    const result = await Category.update(req.params.id, req.body);
+    res.json(result);
+  } catch (error) {
+    console.error("Error al actualizar categoría:", error);
+    res.status(500).json({ error: "Error al actualizar categoría" });
+  }
+});
+
+//  Eliminar categoría
+router.delete("/:id", async (req, res) => {
+  try {
+    const result = await Category.delete(req.params.id);
+    res.json(result);
+  } catch (error) {
+    console.error("Error al eliminar categoría:", error);
+    res.status(500).json({ error: "Error al eliminar categoría" });
+  }
+});
+
+//  NUEVO: obtener 5 películas aleatorias por cada categoría
+router.get("/movies-by-category/all", async (req, res) => {
+  try {
+    const categories = await Category.findAll();
     const result = [];
 
     for (let cat of categories) {
-      const movies = await Movie.aggregate([
-        { $match: { categoryId: cat._id } },
-        { $sample: { size: 5 } }  // ← 5 aleatorias
-      ]);
-
+      const movies = await Movie.getRandomMoviesByCategory(cat._id, 5);
       result.push({
         category: cat.name,
-        movies
+        movies,
       });
     }
 
