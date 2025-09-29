@@ -136,6 +136,14 @@
     box-shadow: 0 4px 15px rgba(0,0,0,0.7);
     margin-bottom: 25px;
   }
+
+  /*Movie container*/
+  #movies-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 columnas */
+    gap: 20px; /* espacio entre tarjetas */
+    padding: 20px;
+  }
   
   /* Movies row */
   .movies-row {
